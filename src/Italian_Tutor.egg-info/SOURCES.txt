@@ -1,0 +1,10 @@
+README.md
+pyproject.toml
+src/Italian_Tutor.egg-info/PKG-INFO
+src/Italian_Tutor.egg-info/SOURCES.txt
+src/Italian_Tutor.egg-info/dependency_links.txt
+src/Italian_Tutor.egg-info/entry_points.txt
+src/Italian_Tutor.egg-info/top_level.txt
+src/italian_tutor/CEFR_Levels.csv
+src/italian_tutor/__init__.py
+src/italian_tutor/tutor.py

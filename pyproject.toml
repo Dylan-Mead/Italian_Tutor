@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "Italian_Tutor"
+version = "0.1.0"
+
+[project.scripts]
+tutor = "italian_tutor.tutor:main"
+
+[tool.setuptools.packages.find]
+where = ["src"] 
+
+[tool.setuptools.package-data]
+italian_tutor = ["CEFR_Levels.csv"]
+
+#To enable: pip install -e .
+#pip freeze > requirements.txt
+
