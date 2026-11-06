@@ -134,7 +134,7 @@ def is_input_safe(user_input):
         verdict = res['message']['content'].strip().upper()
     except Exception as e:
         return False, f"ERROR ({e})"
-    return verdict == "SAFE", verdict
+    return verdict != "INJECTION", verdict
 
 def finalize_session(user_mem, messages):
     """Ask the model to summarize the conversation so far, merge the result into
@@ -190,9 +190,9 @@ def main():
     while True:
         try:
             user_input = input("You: ")
-            stripped_input = user_input.strip()
+            stripped_input = user_input.strip().lower()
 
-            if stripped_input in ["/exit", "/quit"]:
+            if stripped_input in ["/exit", "/quit", "exit", "quit"]:
                 break
 
             if stripped_input in ["/reset", "/restart"]:

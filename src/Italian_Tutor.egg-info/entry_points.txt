@@ -1,2 +1,3 @@
 [console_scripts]
 tutor = italian_tutor.tutor:main
+tutor-web = italian_tutor.webapp:main

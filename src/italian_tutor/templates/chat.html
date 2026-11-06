@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paolo - Italian Tutor</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app">
+  <header class="app-header">
+    <h1>🇮🇹 Paolo <span class="subtitle">- Italian Tutor</span></h1>
+    <button id="sidebar-toggle" class="icon-btn" aria-label="Toggle progress panel">📊</button>
+  </header>
+
+  <div class="main">
+    <aside id="sidebar" class="sidebar">
+      <h2>Your Progress</h2>
+      <div class="field">
+        <span class="label">Level</span>
+        <span id="mem-level" class="badge">...</span>
+      </div>
+      <div class="field">
+        <span class="label">Words you know</span>
+        <div id="mem-learned" class="pill-list"></div>
+      </div>
+      <div class="field">
+        <span class="label">Words you struggle with</span>
+        <div id="mem-struggled" class="pill-list"></div>
+      </div>
+      <div class="field">
+        <span class="label">Concepts mastered</span>
+        <div id="mem-concepts" class="pill-list"></div>
+      </div>
+      <div class="field">
+        <span class="label">Notes</span>
+        <p id="mem-notes" class="notes"></p>
+      </div>
+    </aside>
+
+    <main class="chat-area">
+      <div id="warning" class="warning hidden"></div>
+      <div id="messages" class="messages">
+        {% for m in history %}
+        <div class="message {{ m.role }}">{{ m.content }}</div>
+        {% endfor %}
+      </div>
+      <form id="chat-form" class="chat-form">
+        <textarea id="chat-input" placeholder="Scrivi qualcosa in italiano o in inglese..." rows="1" autofocus></textarea>
+        <button type="submit" id="send-btn">Send</button>
+      </form>
+      <div class="actions">
+        <button id="save-btn" class="secondary-btn">💾 Save Progress</button>
+        <button id="reset-btn" class="secondary-btn">🔄 New Conversation</button>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
