@@ -8,6 +8,7 @@
   const warningEl = document.getElementById("warning");
   const sidebarToggle = document.getElementById("sidebar-toggle");
   const sidebar = document.getElementById("sidebar");
+  const structuredModeToggle = document.getElementById("structuredModeToggle");
 
   function scrollToBottom() {
     messagesEl.scrollTop = messagesEl.scrollHeight;
@@ -37,6 +38,7 @@
     saveBtn.disabled = busy;
     resetBtn.disabled = busy;
     inputEl.disabled = busy;
+    structuredModeToggle.disabled = busy;
   }
 
   function renderPills(container, items, extraClass) {
@@ -181,6 +183,41 @@
 
   sidebarToggle.addEventListener("click", () => {
     sidebar.classList.toggle("open");
+  });
+
+  structuredModeToggle.addEventListener("change", async () => {
+    clearWarning();
+    const isStructured = structuredModeToggle.checked;
+    const newMode = isStructured ? "structured" : "free";
+    
+    setBusy(true);
+    
+    try {
+      const response = await fetch("/api/mode", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mode: newMode }),
+      });
+      
+      if (!response.ok) {
+        const error = await response.json();
+        showWarning(error.error || "Failed to switch mode.");
+        structuredModeToggle.checked = !isStructured;
+        setBusy(false);
+        return;
+      }
+      
+      const data = await response.json();
+      const modeLabel = isStructured ? "Structured" : "Free";
+      const message = `Switched to ${modeLabel} mode.${data.focus_word ? ` Now teaching: **${data.focus_word}**` : ''}`;
+      appendMessage("assistant", message);
+      setBusy(false);
+      inputEl.focus();
+    } catch (e) {
+      showWarning("Network error: " + e.message);
+      structuredModeToggle.checked = !isStructured;
+      setBusy(false);
+    }
   });
 
   refreshMemory();
